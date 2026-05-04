@@ -5,6 +5,8 @@ A VS Code extension that auto-blocks and removes extensions listed in the
 
 **Source code:** [github.com/vsxsentry/vsxsentry-guard](https://github.com/vsxsentry/vsxsentry-guard)
 
+On the VSCode Marketplace https://marketplace.visualstudio.com/items?itemName=mthcht.vsxsentry-guard
+
 ## Behaviour
 
 - **Malicious feed** - enforced silently. Every installed extension whose ID matches
