@@ -2,7 +2,7 @@
   "name": "vsxsentry-guard",
   "displayName": "VSXSentry Guard",
   "description": "Auto-block and remove malicious / risky VS Code extensions using the VSXSentry feeds.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "mthcht",
   "license": "MIT",
   "icon": "icon.png",
