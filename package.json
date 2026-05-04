@@ -1,0 +1,132 @@
+{
+  "name": "vsxsentry-guard",
+  "displayName": "VSXSentry Guard",
+  "description": "Auto-block and remove malicious / risky VS Code extensions using the VSXSentry feeds.",
+  "version": "0.1.1",
+  "publisher": "mthcht",
+  "license": "MIT",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vsxsentry/vsxsentry-guard"
+  },
+  "homepage": "https://github.com/vsxsentry/vsxsentry-guard",
+  "bugs": {
+    "url": "https://github.com/vsxsentry/vsxsentry-guard/issues"
+  },
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "vsxSentry.checkNow",
+        "title": "VSXSentry: Check feeds now"
+      },
+      {
+        "command": "vsxSentry.reviewPending",
+        "title": "VSXSentry: Review pending entries"
+      },
+      {
+        "command": "vsxSentry.showReport",
+        "title": "VSXSentry: Show last report"
+      },
+      {
+        "command": "vsxSentry.clearOverrides",
+        "title": "VSXSentry: Clear user overrides (kept extensions)"
+      }
+    ],
+    "configuration": {
+      "title": "VSXSentry Guard",
+      "properties": {
+        "vsxSentry.malicious.feedUrl": {
+          "type": "string",
+          "default": "https://vsxsentry.github.io/feeds/vsxsentry_malicious_feed.csv",
+          "description": "CSV feed of malicious extensions. Always enforced silently.",
+          "markdownDescription": "CSV feed of malicious extensions. Always enforced silently.\n\n[View source code on GitHub](https://github.com/vsxsentry/vsxsentry-guard) | [Report an issue](https://github.com/vsxsentry/vsxsentry-guard/issues)"
+        },
+        "vsxSentry.risky.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also enforce the risky feed. When enabled, you'll be prompted before action - risky entries are often legitimate tools."
+        },
+        "vsxSentry.risky.feedUrl": {
+          "type": "string",
+          "default": "https://vsxsentry.github.io/feeds/vsxsentry_risky_feed.csv",
+          "description": "CSV feed of risky extensions."
+        },
+        "vsxSentry.risky.severities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "default": [
+            "high"
+          ],
+          "description": "Severities from the risky feed to act on."
+        },
+        "vsxSentry.risky.categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "*"
+          ],
+          "description": "Categories to act on (e.g. 'risky-tunnel', 'risky-remote-access', 'risky-ai-code-access'). Use ['*'] for all."
+        },
+        "vsxSentry.action": {
+          "type": "string",
+          "enum": [
+            "remove",
+            "disable",
+            "warn"
+          ],
+          "default": "remove",
+          "description": "What to do with detected installed extensions. 'remove' uninstalls; 'disable' just disables; 'warn' only notifies."
+        },
+        "vsxSentry.applyToAllowedSetting": {
+          "type": "boolean",
+          "default": true,
+          "description": "Also write blocked IDs to extensions.allowed so VS Code refuses future installs (subject to existing user/policy config)."
+        },
+        "vsxSentry.updateIntervalHours": {
+          "type": "number",
+          "default": 6,
+          "minimum": 0.5,
+          "description": "How often to re-fetch the feeds in the background."
+        },
+        "vsxSentry.notifyOnNewEntries": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a notification when the feeds gain new entries since last check."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.82.0",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.1",
+    "mocha": "^11.7.5",
+    "typescript": "^5.3.0"
+  }
+}
